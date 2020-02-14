@@ -15,9 +15,13 @@ public class Main {
 		numbers.add(1, 15);
 		numbers.addFirst(15);
 		
-		System.out.println(numbers); //자바에서는 일반적으로 객체를 프린터하면, 객체가 위치한 곳(레퍼런스 값)을 출력한다.
+		System.out.println(numbers);
 		
+		numbers.remove(1);
+		
+		System.out.println(numbers); //자바에서는 일반적으로 객체를 프린터하면, 객체가 위치한 곳(레퍼런스 값)을 출력한다.
 	
+		System.out.println(numbers.get(1));
 	
 		
 	}
