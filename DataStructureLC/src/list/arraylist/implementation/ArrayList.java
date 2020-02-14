@@ -50,6 +50,20 @@ public class ArrayList {
 	public Object get(int index) {
 		return elementData[index];
 	}
+	
+	public int size() {
+		return size;
+	}
+	
+	public int indexOf(Object element){
+		for (int i = 0; i <= size-1; i++) {
+			if (element.equals(elementData[i])) {
+				return i;
+			}
+			
+		}
+		return -1; 	
+	}
 
 	public String toString() {
 		String str = "[";
@@ -60,6 +74,29 @@ public class ArrayList {
 			}
 		} 
 		return str + "]";
+	}
+	
+	public ListIterator listIterator() {
+		return new ListIterator();
+	}
+	
+	class ListIterator{
+		private int nextIndex = 0;
+		public Object next() {
+			return elementData[nextIndex++];
+	//		Object returnData = elementData[nextIndex];
+	//		nextIndex++;
+	//		return returnData;
+			/*리턴하려는 값은 ListIterator의 부모 클래스인 ArrayList의 elementData[]의 특정한 인덱스에 담겨있음
+			 * 특정한 인덱스를 어떻게 결정하는가? next()가 호출될때마다 elementData[nextIndex]에 들어가는 nextIndex값이 0부터 시작해서 1씩 증가하게 된다면 
+			 * 우리는 elementData[]에 담겨있는 값들은 next()가 호출할 때마다 순차적으로 하나씩 꺼내서 리턴할 수 있음.
+			*/
+			
+		}
+		
+		public boolean hasNext() {
+			return nextIndex < size();
+		}
 	}
 
 }

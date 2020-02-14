@@ -16,12 +16,20 @@ public class Main {
 		numbers.addFirst(15);
 		
 		System.out.println(numbers);
-		
+		System.out.println(numbers.size());
 		numbers.remove(1);
 		
 		System.out.println(numbers); //자바에서는 일반적으로 객체를 프린터하면, 객체가 위치한 곳(레퍼런스 값)을 출력한다.
-	
+		System.out.println(numbers.size());
 		System.out.println(numbers.get(1));
+		System.out.println(numbers.indexOf(20));
+		System.out.println(numbers.indexOf(60));
+		
+		ArrayList.ListIterator li = numbers.listIterator();
+		while (li.hasNext()) {
+			System.out.println(li.next());
+		}
+		
 	
 		
 	}
