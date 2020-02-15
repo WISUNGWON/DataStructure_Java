@@ -25,12 +25,33 @@ public class Main {
 		System.out.println(numbers.indexOf(20));
 		System.out.println(numbers.indexOf(60));
 		
+		
 		ArrayList.ListIterator li = numbers.listIterator();
+		
+		System.out.println("this is numbers " + numbers);
+		
 		while (li.hasNext()) {
-			System.out.println(li.next());
+			int number = (int)li.next();
+			if(number == 30) {
+				li.add(35);
+			}
 		}
 		
-	
+		System.out.println("this is numbers " + numbers);
+		
+		
+		while (li.hasPrevious()) {
+			System.out.println(li.previous());
+		}
+		
+		while (li.hasNext()) {
+			int number = (int)li.next();
+			if(number == 30) {
+				li.remove();
+			}
+		}
+		
+		System.out.println("this is numbers " + numbers);
 		
 	}
 

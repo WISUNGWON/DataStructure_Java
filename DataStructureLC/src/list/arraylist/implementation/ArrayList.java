@@ -9,7 +9,7 @@ public class ArrayList {
 		elementData[size] = element; 
 		size++;
 		return true;
-		
+		 
 	}
 	
 	public boolean add(int index, Object element) {
@@ -97,6 +97,27 @@ public class ArrayList {
 		public boolean hasNext() {
 			return nextIndex < size();
 		}
+		
+		public Object previous() {
+			return elementData[--nextIndex];
+		}
+		
+		public boolean hasPrevious() {
+			return nextIndex > 0;
+		}
+		
+		public void add(Object element) {
+			ArrayList.this.add(nextIndex++, element);
+		}
+		
+		public void remove() {
+			ArrayList.this.remove(nextIndex-1);
+			//next()를 실행한 순간 nextIndex는 다음 index를 가르키고 있기 떄문에
+			//next()실행 이후 현재 자료를 삭제하고 싶으면 nextIndex-1을 해주어야 한다.
+			nextIndex--;
+		}
+		
+		
 	}
 
 }
