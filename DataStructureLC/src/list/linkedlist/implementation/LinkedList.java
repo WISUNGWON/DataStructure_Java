@@ -62,6 +62,19 @@ public class LinkedList {
 		
 	}
 	
+	public String toString() {
+		String str = "[";
+		if (head == null) {
+			str = "[]";
+		} else str = str + head;
+		Node i = head.next;
+		while(i != null) {
+			str = str + ", " + i;
+			i = i.next;
+		}
+		return str + "]";
+	}
+	
 	public Node getHead() {
 		return head;
 	}

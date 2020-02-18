@@ -10,7 +10,9 @@ public class Main {
 		numbers.addFirst(20);
 		numbers.addFirst(10);
 		numbers.add(3, 15);
+		numbers.add(4, 10000);
 		System.out.println(numbers.node(3));
+		System.out.println(numbers);
 
 	}
 
