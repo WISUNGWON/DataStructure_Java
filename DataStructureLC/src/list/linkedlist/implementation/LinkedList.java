@@ -75,9 +75,69 @@ public class LinkedList {
 		return str + "]";
 	}
 	
+	public Object removeFirst() {
+		Node temp = head;
+		head = head.next;
+		Object returnData = temp.data;
+		temp = null;
+		size--;
+		return returnData;
+	}
+	
+	public Object remove(int index) {
+		if(index == 0) {
+			return removeFirst();
+		}
+		Node temp = node(index-1); //삭제를 위해서는 지우고 싶은 값의 index의 이전값을 알야야 함.
+		Node todoDeleted = temp.next; //삭제할 값을 todoDeleted에 저장하여, returnData 유지 
+		temp.next = temp.next.next; //값의 연결이 끊어짐
+		Object returnData = todoDeleted.data;
+		if(todoDeleted == tail) { //지우고자하는 노드가 tail일 경우
+			tail = temp; //이전 값을 tail로 설정한다. 
+		}
+		todoDeleted = null;
+		size--;
+		return returnData;
+	}
+	
+	public Object returnLast() {
+		return remove(size-1);
+	}
+	
+	public int size() {
+		return size;
+	}
+	
+	public Object get(int index) { //해당 노드의 data를 가져옴 
+		Node temp = node(index); 
+		return temp.data;
+	}
+	
+	public int indexOf(Object data) {
+		Node temp = head;
+		int index = 0;
+		while(temp.data != data && temp.next.data != null) {
+			temp = temp.next;
+			index++;
+		}
+		if(temp.data != data) {
+			return -1;
+		} else return index;
+	
+	}
+	
+	
+	
+	
+	
+	
+	
+	
 	public Node getHead() {
 		return head;
 	}
+	
+	
 	
 	 
 
