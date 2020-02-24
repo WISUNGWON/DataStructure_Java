@@ -116,17 +116,73 @@ public class LinkedList {
 	public int indexOf(Object data) {
 		Node temp = head;
 		int index = 0;
-		while(temp.data != data && temp.next.data != null) {
+		while(temp.data != data && temp != null) {
 			temp = temp.next;
 			index++;
+			
 		}
 		if(temp.data != data) {
 			return -1;
-		} else return index;
-	
+		} else {
+		return index;
+		}
 	}
+		
+		
+		
+		
+	public ListIterator listIterator() {
+		return new ListIterator();
+	}
+		
+	class ListIterator{
+		private Node next;
+		private Node lastReturned;
+		private int nextIndex;
+			
+		ListIterator(){
+			next = head;
+		}
+			
+		public Object next() {
+			lastReturned = next;
+			next = next.next;
+			nextIndex++;
+			return lastReturned.data;
+		}
+			
+		
+		public boolean hasNext() {
+			return nextIndex < size();
+		}
+		
+		public void add(Object input) {
+			Node newNode = new Node(input);
+			
+			if(lastReturned == null) { //아직 값이 아무것도 없다. 
+				head = newNode;
+				newNode.next = next;
+			} else {
+				lastReturned.next = newNode;
+				newNode.next = next;
+			}
+			
+			lastReturned = newNode; // 즉, lastReturned 값은 현재값이다.
+			nextIndex++;
+			size++;
+		}
+		
+		public void remove() {
+			if(nextIndex == 0) { //remove()는 lastReturned 값을 삭제하는데, 한번도 next가 실행되지 않았다면, remove()할 값도 없다는 뜻. 
+				throw new IllegalStateException();
+			}
+			LinkedList.this.remove(nextIndex-1); //LinkedList의 remove함수는 자체적으로 node()라는 함수를 사용하여 link를 찾고 있기 때문에, 이 방법으로 remove를 실행하면, 시간이 오래걸리는 단점이 있다. 따라서 자체적으로 이전값을 나타내는 변수를 유지하면서 지워주는게 효율적인데이느 doubleLinkedlist에서 살펴본다.
+			nextIndex--;
+				
+			}
 	
-	
+
+ }
 	
 	
 	
