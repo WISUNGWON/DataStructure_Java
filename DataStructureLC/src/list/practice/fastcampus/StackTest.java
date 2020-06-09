@@ -13,7 +13,7 @@ class MyStack {
 	public String pop() {
 		int len = arrayStack.size();
 		if (len == 0) {
-			System.out.println("스택이 비었습니다.");
+			System.out.println("Stack is Empty");
 			return null;
 		}
 		return arrayStack.remove(len-1);

@@ -51,7 +51,7 @@ public class LinkedList {
 			addFirst(input);
 		} else {
 			Node newNode = new Node(input); //temp2를 만들어서 지정하는 방식도 있지만, 그렇게하면 코드가 1줄 길어짐.
-			Node temp1 = node(index-1);
+			Node temp1 = node(index - 1);
 			newNode.next = temp1.next;
 			temp1.next = newNode;
 			if (newNode.next == null) {
