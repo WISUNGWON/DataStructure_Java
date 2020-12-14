@@ -1,28 +1,30 @@
 package list.linkedlist.implementation;
 
 public class LinkedList {
-	private Node head; 
-	private Node tail; 
+	private Node head;
+	private Node tail;
 	private int size = 0;
-	
-	private class Node{ 
-		private Object data; 
-		private Node next; 
-		public Node(Object input){ 
-			this.data = input; 
-			this.next = null; 
+
+	private class Node {
+		private Object data;
+		private Node next;
+
+		public Node(Object input) {
+			this.data = input;
+			this.next = null;
 		}
+
 		public String toString() {
-			return String.valueOf(this.data); //각 노드 1개의 값만 출력
+			return String.valueOf(this.data);
 		}
-	}
+	} // end of Node
 	
 	public void addFirst(Object input) {
 		Node newNode = new Node(input);
-		newNode.next = head; //각 노드는 다음값을 저장하고 있다!
+		newNode.next = head;	
 		head = newNode;
 		size++;
-		if (head.next == null ) {
+		if (head.next == null) {
 			tail = head;
 		}
 	}
@@ -38,40 +40,42 @@ public class LinkedList {
 		}
 	}
 	
-	public Node node(int index) { // 내부적으로 사용될 API 생성 (내부적으로 사용될 메서드를 public으로 선언하는 것은 바람직하지 않음, 단 test를 위해 public사용)
-		Node x = head;
-		for(int i = 0; i < index; i++) {
-			x = x.next;
+	Node node(int index) {
+		Node n = head;
+		for (int i = 0; i < index; i++) {
+			n = n.next;
 		}
-		return x;
-	} 
+		return n;
+	}
 	
 	public void add(int index, Object input) {
 		if (index == 0) {
-			addFirst(input);
+			addFirst(input); 
 		} else {
-			Node newNode = new Node(input); //temp2를 만들어서 지정하는 방식도 있지만, 그렇게하면 코드가 1줄 길어짐.
-			Node temp1 = node(index - 1);
-			newNode.next = temp1.next;
-			temp1.next = newNode;
+			Node previousNode = node(index - 1);
+			Node newNode = new Node(input);
+			Node nextNode = previousNode.next;
+			previousNode.next = newNode;
+			newNode.next = nextNode;
+			size++;
 			if (newNode.next == null) {
 				tail = newNode;
 			}
-			size++;
 		}
-		
 	}
 	
 	public String toString() {
-		String str = "[";
 		if (head == null) {
-			str = "[]";
-		} else str = str + head;
-		Node i = head.next;
-		while(i != null) {
-			str = str + ", " + i;
-			i = i.next;
+			return "[]";
+		} 
+		Node temp = head;
+		String str = "[";
+		while (temp.next != null) {
+			str += temp.data + ", ";
+			temp = temp.next;
 		}
+		str += temp.data;
+		
 		return str + "]";
 	}
 	
@@ -83,118 +87,28 @@ public class LinkedList {
 		size--;
 		return returnData;
 	}
-	
 	public Object remove(int index) {
-		if(index == 0) {
+		if (index == 0) {
 			return removeFirst();
 		}
-		Node temp = node(index-1); //삭제를 위해서는 지우고 싶은 값의 index의 이전값을 알야야 함.
-		Node todoDeleted = temp.next; //삭제할 값을 todoDeleted에 저장하여, returnData 유지 
-		temp.next = temp.next.next; //값의 연결이 끊어짐
+		Node previousNode = node(index - 1);
+		Node todoDeleted = previousNode.next;
+		previousNode.next = previousNode.next.next;
 		Object returnData = todoDeleted.data;
-		if(todoDeleted == tail) { //지우고자하는 노드가 tail일 경우
-			tail = temp; //이전 값을 tail로 설정한다. 
+		if (todoDeleted == tail) {
+			tail = previousNode;
 		}
 		todoDeleted = null;
 		size--;
 		return returnData;
 	}
-	
-	public Object returnLast() {
-		return remove(size-1);
-	}
-	
-	public int size() {
+
+	public int getSize() {
 		return size;
 	}
 	
-	public Object get(int index) { //해당 노드의 data를 가져옴 
-		Node temp = node(index); 
-		return temp.data;
+	public Object get(int index) {
+		return node(index).data;
 	}
 	
-	public int indexOf(Object data) {
-		Node temp = head;
-		int index = 0;
-		while(temp.data != data && temp != null) {
-			temp = temp.next;
-			index++;
-			
-		}
-		if(temp.data != data) {
-			return -1;
-		} else {
-		return index;
-		}
-	}
-		
-		
-		
-		
-	public ListIterator listIterator() {
-		return new ListIterator();
-	}
-		
-	class ListIterator{
-		private Node next;
-		private Node lastReturned;
-		private int nextIndex;
-			
-		ListIterator(){
-			next = head;
-		}
-			
-		public Object next() {
-			lastReturned = next;
-			next = next.next;
-			nextIndex++;
-			return lastReturned.data;
-		}
-			
-		
-		public boolean hasNext() {
-			return nextIndex < size();
-		}
-		
-		public void add(Object input) {
-			Node newNode = new Node(input);
-			
-			if(lastReturned == null) { //아직 값이 아무것도 없다. 
-				head = newNode;
-				newNode.next = next;
-			} else {
-				lastReturned.next = newNode;
-				newNode.next = next;
-			}
-			
-			lastReturned = newNode; // 즉, lastReturned 값은 현재값이다.
-			nextIndex++;
-			size++;
-		}
-		
-		public void remove() {
-			if(nextIndex == 0) { //remove()는 lastReturned 값을 삭제하는데, 한번도 next가 실행되지 않았다면, remove()할 값도 없다는 뜻. 
-				throw new IllegalStateException();
-			}
-			LinkedList.this.remove(nextIndex-1); //LinkedList의 remove함수는 자체적으로 node()라는 함수를 사용하여 link를 찾고 있기 때문에, 이 방법으로 remove를 실행하면, 시간이 오래걸리는 단점이 있다. 따라서 자체적으로 이전값을 나타내는 변수를 유지하면서 지워주는게 효율적인데이느 doubleLinkedlist에서 살펴본다.
-			nextIndex--;
-				
-			}
-	
-
- }
-	
-	
-	
-	
-	
-	
-	public Node getHead() {
-		return head;
-	}
-	
-	
-	
-	 
-
-}
+} // end of class

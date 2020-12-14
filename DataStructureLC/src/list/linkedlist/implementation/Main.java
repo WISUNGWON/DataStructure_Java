@@ -4,25 +4,13 @@ public class Main {
 
 	public static void main(String[] args) {
 		LinkedList numbers = new LinkedList();
-		
-		
-		numbers.addFirst(30);
-		numbers.addFirst(20);
-		numbers.addFirst(10);
-		numbers.add(3, 15);
-		numbers.add(4, 40);
+		numbers.addFirst(50);
+		numbers.addFirst(50);
+		numbers.addFirst(50);
+		numbers.addFirst(50);
+		numbers.add(1, 15);
 		numbers.removeFirst();
-		System.out.println(numbers.node(3));
+		numbers.remove(3);
 		System.out.println(numbers);
-		LinkedList.ListIterator i = numbers.listIterator();
-	    while(i.hasNext()) {
-	    	System.out.println(i.next());
-	    }
-		
-		//System.out.println(numbers.indexOf(50));
-		
-		
-
 	}
-
 }
